@@ -1,58 +1,207 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laporan 5 Praktikum Pemrograman Web 2
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Judul
 
-## About Laravel
+API RESTful dan Standar Response
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Keterangan | Data |
+| --- | --- |
+| Nama | Fyas |
+| NIM | Isi NIM |
+| Kelas | Isi kelas |
+| Program Studi | Isi program studi |
+| Dosen Pengampu | Isi nama dosen |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tujuan Praktikum
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Tujuan dari praktikum ini adalah:
 
-## Learning Laravel
+1. Memahami konsep dasar API RESTful pada aplikasi Laravel.
+2. Membuat endpoint API dengan method HTTP yang sesuai.
+3. Mengimplementasikan standar response JSON pada API.
+4. Menguji endpoint API menggunakan tool seperti Postman, Thunder Client, atau cURL.
+5. Menangani response sukses dan error secara konsisten.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Dasar Teori
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### API
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+API atau Application Programming Interface adalah mekanisme yang memungkinkan sebuah aplikasi berkomunikasi dengan aplikasi lain. Dalam pengembangan web, API sering digunakan untuk mengirim dan menerima data antara frontend, backend, aplikasi mobile, atau layanan pihak ketiga.
 
-## Agentic Development
+### RESTful API
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+RESTful API adalah arsitektur API yang mengikuti prinsip REST atau Representational State Transfer. API RESTful biasanya menggunakan method HTTP untuk menentukan operasi terhadap resource.
 
-```bash
-composer require laravel/boost --dev
+| Method | Fungsi |
+| --- | --- |
+| GET | Mengambil data |
+| POST | Menambahkan data baru |
+| PUT/PATCH | Mengubah data yang sudah ada |
+| DELETE | Menghapus data |
 
-php artisan boost:install
+### Standar Response
+
+Standar response digunakan agar format balasan API konsisten dan mudah dipahami oleh client. Response API umumnya menggunakan format JSON.
+
+Contoh response sukses:
+
+```json
+{
+    "success": true,
+    "message": "Data berhasil diambil",
+    "data": []
+}
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Contoh response error:
 
-## Contributing
+```json
+{
+    "success": false,
+    "message": "Data tidak ditemukan",
+    "data": null
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Persiapan Project
 
-## Code of Conduct
+Langkah awal menjalankan project Laravel:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
 
-## Security Vulnerabilities
+Jika menggunakan database, sesuaikan konfigurasi pada file `.env`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Implementasi
 
-## License
+### 1. Membuat Route API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Route API dibuat pada file `routes/api.php`.
+
+```php
+Route::get('/nama-resource', [NamaController::class, 'index']);
+Route::post('/nama-resource', [NamaController::class, 'store']);
+Route::get('/nama-resource/{id}', [NamaController::class, 'show']);
+Route::put('/nama-resource/{id}', [NamaController::class, 'update']);
+Route::delete('/nama-resource/{id}', [NamaController::class, 'destroy']);
+```
+
+### 2. Membuat Controller
+
+Controller digunakan untuk mengatur proses request dan response API.
+
+```bash
+php artisan make:controller Api/NamaController
+```
+
+### 3. Membuat Standar Response JSON
+
+Setiap endpoint API mengembalikan response dengan format yang konsisten.
+
+```php
+return response()->json([
+    'success' => true,
+    'message' => 'Data berhasil diproses',
+    'data' => $data
+], 200);
+```
+
+### 4. Menangani Error
+
+Response error diberikan ketika proses gagal, misalnya data tidak ditemukan atau validasi gagal.
+
+```php
+return response()->json([
+    'success' => false,
+    'message' => 'Data tidak ditemukan',
+    'data' => null
+], 404);
+```
+
+## Daftar Endpoint
+
+| Method | Endpoint | Keterangan | Status Code |
+| --- | --- | --- | --- |
+| GET | `/api/nama-resource` | Menampilkan semua data | 200 |
+| POST | `/api/nama-resource` | Menambahkan data baru | 201 |
+| GET | `/api/nama-resource/{id}` | Menampilkan detail data | 200 |
+| PUT/PATCH | `/api/nama-resource/{id}` | Mengubah data | 200 |
+| DELETE | `/api/nama-resource/{id}` | Menghapus data | 200 |
+
+## Hasil Pengujian
+
+### Pengujian GET
+
+Tambahkan screenshot atau hasil response dari endpoint GET.
+
+```json
+{
+    "success": true,
+    "message": "Data berhasil diambil",
+    "data": []
+}
+```
+
+### Pengujian POST
+
+Tambahkan screenshot atau hasil response dari endpoint POST.
+
+```json
+{
+    "success": true,
+    "message": "Data berhasil ditambahkan",
+    "data": {}
+}
+```
+
+### Pengujian PUT/PATCH
+
+Tambahkan screenshot atau hasil response dari endpoint PUT/PATCH.
+
+```json
+{
+    "success": true,
+    "message": "Data berhasil diperbarui",
+    "data": {}
+}
+```
+
+### Pengujian DELETE
+
+Tambahkan screenshot atau hasil response dari endpoint DELETE.
+
+```json
+{
+    "success": true,
+    "message": "Data berhasil dihapus",
+    "data": null
+}
+```
+
+## Pembahasan
+
+Pada praktikum ini, API RESTful dibuat dengan memanfaatkan route, controller, dan response JSON pada Laravel. Setiap endpoint menggunakan method HTTP sesuai fungsinya. Format response dibuat konsisten agar client dapat membaca status, pesan, dan data dengan mudah.
+
+Tuliskan pembahasan tambahan sesuai implementasi yang dibuat pada project.
+
+## Kendala
+
+Tuliskan kendala yang ditemukan selama praktikum, misalnya:
+
+1. Kesalahan konfigurasi database pada file `.env`.
+2. Route API tidak terbaca.
+3. Validasi request belum sesuai.
+4. Response JSON belum konsisten.
+
+## Kesimpulan
+
+Berdasarkan praktikum yang telah dilakukan, dapat disimpulkan bahwa API RESTful pada Laravel dapat dibuat menggunakan route API dan controller. Standar response JSON membantu membuat API lebih rapi, konsisten, dan mudah digunakan oleh client.
+
+## Lampiran
+
+Tambahkan screenshot hasil pengujian API, kode program penting, atau dokumentasi endpoint yang digunakan dalam praktikum.
