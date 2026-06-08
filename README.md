@@ -77,6 +77,39 @@ php artisan serve
 
 Jika menggunakan database, sesuaikan konfigurasi pada file `.env`.
 
+## 1. Git Branching & Setup Environment
+
+Pada tahap awal pengerjaan modul ini, project dipindahkan dari branch `main` ke branch baru bernama `feature/api-design`. Branch baru ini digunakan agar pengerjaan modul API RESTful dan standar response terpisah dari branch utama.
+
+Perintah yang digunakan:
+
+```bash
+git checkout -b feature/api-design
+```
+
+Hasil setelah branch dibuat:
+
+```bash
+Switched to a new branch 'feature/api-design'
+```
+
+Untuk memastikan branch aktif, digunakan perintah:
+
+```bash
+git branch
+```
+
+Output:
+
+```bash
+* feature/api-design
+  main
+```
+
+Screenshot:
+
+Tambahkan screenshot terminal yang menampilkan daftar branch dengan tanda aktif `*` pada branch `feature/api-design`.
+
 ## Implementasi
 
 ### 1. Membuat Route API
