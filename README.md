@@ -4,14 +4,6 @@
 
 API RESTful dan Standar Response
 
-| Keterangan | Data |
-| --- | --- |
-| Nama | Fyas |
-| NIM | Isi NIM |
-| Kelas | Isi kelas |
-| Program Studi | Isi program studi |
-| Dosen Pengampu | Isi nama dosen |
-
 ## Tujuan Praktikum
 
 Tujuan dari praktikum ini adalah:
